@@ -1,0 +1,45 @@
+/* loginform.css */
+
+.login-form-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 50px;
+}
+
+.form-container {
+  margin-top: 20px;
+}
+
+.input-label {
+  margin-bottom: 5px;
+}
+
+.username-input-field,
+.password-input-field {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.login-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-top: 10px;
+}
+
+/* Add more styles as needed */
