@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaSpinner } from 'react-icons/fa';
+
 
 const Homepage = () => {
   const [jokes, setJokes] = useState([]);
@@ -31,7 +33,10 @@ const Homepage = () => {
     <div className="container mt-5">
       <h2>Jokes</h2>
       {loading ? (
-        <p>Loading...</p>
+         <div className="text-center">
+         <FaSpinner className="loading-spinner" />
+         <p>Loading...</p>
+       </div>
       ) : (
         <table className="table">
           <thead>
