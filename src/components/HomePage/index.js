@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { FaSpinner } from 'react-icons/fa';
 
+import './index.css';
 
 const Homepage = () => {
   const [jokes, setJokes] = useState([]);
@@ -9,55 +11,59 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://v2.jokeapi.dev/joke/any?format=json&blacklistFlags=nsfw,sexist&type=single&lang=EN&amount=10');
-        const data = await response.json();
+    fetch('https://v2.jokeapi.dev/joke/any?format=json&blacklistFlags=nsfw,sexist&type=single&lang=EN&amount=10')
+      .then(response => response.json())
+      .then(data => {
         setJokes(data.jokes);
-      } catch (error) {
-        console.error('Error fetching jokes:', error);
-      } finally {
-        setLoading(false); // Set loading to false whether successful or not
-      }
-    };
-
-    fetchData();
+        setLoading(false);
+      });
   }, []);
 
   const handleLogout = () => {
-    // Implement any additional logout logic if needed
+    // Redirect to login page on logout
     navigate('/login');
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Jokes</h2>
-      {loading ? (
-         <div className="text-center">
-         <FaSpinner className="loading-spinner" />
-         <p>Loading...</p>
-       </div>
-      ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Joke</th>
-            </tr>
-          </thead>
-          <tbody>
-            {jokes.map((joke) => (
-              <tr key={joke.id}>
-                <td>{joke.id}</td>
-                <td>{joke.joke}</td>
+    <div>
+      <nav className="nav-header">
+        <div className="nav-content">
+          <ul className="nav-menu">
+            <li className="nav-link" onClick={() => navigate('/')}>
+              Home
+            </li>
+          </ul>
+          <button type="button" className="logout-desktop-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+      </nav>
+
+      <div className="container mt-5">
+        <h2 className='text-info text-center'>Jokes Table</h2>
+        {loading ? (
+          <FaSpinner className="spinner" />
+        ) : (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col" className='text-warning'>ID</th>
+                <th scope="col" className='text-warning'>CATEGORY</th>
+                <th scope="col" className='text-warning'>JOKE</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      <button className="btn btn-danger" onClick={handleLogout}>
-        Logout
-      </button>
+            </thead>
+            <tbody>
+              {jokes.map((joke) => (
+                <tr key={joke.id}>
+                  <td>{joke.id}</td>
+                  <td>{joke.category}</td>
+                  <td>{joke.joke}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
